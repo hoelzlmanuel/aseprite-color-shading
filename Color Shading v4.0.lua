@@ -219,7 +219,7 @@ local function createDialog()
     }:shades{
         -- saturation gradient
         id = "sat",
-        label = "Sat",
+        label = "Sat.",
         onclick = onShadesClick
     }:shades{
         -- mix gradient
