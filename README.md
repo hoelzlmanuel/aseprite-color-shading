@@ -21,4 +21,4 @@ v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading.
 - Sway sets the actual influence of the temperatures set
 - Slots changes the number of color swatches
 
-<img width="363" alt="Color Shading v4 0" src="https://github.com/hoelzlmanuel/aseprite-color-shading/assets/26813147/28987f67-af23-441b-91e4-72f0c2f9d212">
+<img width="363" alt="Color Shading v4 0" src="https://github.com/hoelzlmanuel/aseprite-color-shading/assets/26813147/6c147bad-40e7-4d8f-9d73-52d503e42433">
