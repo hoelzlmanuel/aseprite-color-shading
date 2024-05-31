@@ -1,21 +1,28 @@
--- Color Shading v4.0
--- Aseprite Script that opens a dynamic palette picker window with relevant color shading options
--- v1.0-2.0 by Dominick John and David Capello, https://github.com/dominickjohn/aseprite/tree/master
--- v3.0 by yashar98, https://github.com/yashar98/aseprite/tree/main
--- v3.1 by Daeyangae, https://github.com/Daeyangae/aseprite
--- v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading
+-- # Aseprite Color Shading v4.0
+-- This is an Aseprite Script that opens a dynamic palette picker window with relevant color shading options.
 
--- Instructions:
---    Place this file into the Aseprite scripts folder (File -> Scripts -> Open Scripts Folder)
+-- Based on v1.0-2.0 by Dominick John and David Capello, https://github.com/dominickjohn/aseprite/tree/master,  
+-- v3.0 by yashar98, https://github.com/yashar98/aseprite/tree/main,  
+-- v3.1 by Daeyangae, https://github.com/Daeyangae/aseprite,  
+-- v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading.
+
+-- ## Instructions:
+--    Place this file into the Aseprite scripts folder (File -> Scripts -> Open Scripts Folder).  
 --    Run the "Color Shading" script (File -> Scripts -> Color Shading v4.0) to open the palette window.
--- Usage:
---    Base: Clicking on either base color will switch the shading palette to that saved color base.
---    "Get" Button: Updates base colors using the current foreground and background color and regenerates shading.
---    Left click: Set clicked color as foreground color.
---    Right click: Set clicked color as background color.
---    Middle click: Set clicked color as fore- or background color, depending on which one was set last (if auto pick is on) and regenerate all shades based on this new color.
+-- ## Usage:
+-- - Base: Clicking on either base color will switch the shading palette to that saved color base.
+-- - "Get" Button: Updates base colors using the current foreground and background color and regenerates shading.
+-- - Left click: Set clicked color as foreground color.
+-- - Right click: Set clicked color as background color.
+-- - Middle click: Set clicked color as fore- or background color, depending on which one was set last (if auto pick is on) and regenerate all shades based on this new color.
+-- - The temperature sliders influence the temperature of the dark and light shade swatches, respectively
+-- - Intensity adds a saturation gradient to the shade swatches
+-- - Peak adds a lightness gradient to the shade swatches
+-- - Sway sets the actual influence of the temperatures set
+-- - Slots changes the number of color swatches
 
 -- variables -------------------------------------------------------------------------
+
 -- main variables
 local dlg
 local autoPick = true
@@ -32,14 +39,15 @@ local mixedColors = {}
 local hueColors = {}
 local lastColor
 
--- BG AND FG COLORS
+-- bg and fg colors
 local FGcache
 local BGcache
 
--- CORE COLOR
+-- core color
 local coreColor
 
 -- helper functions ------------------------------------------------------------------
+
 local function lerp(first, second, by) return first * (1 - by) + second * by end
 
 local function shiftHue(color, amount)
@@ -281,14 +289,26 @@ local function createDialog()
                 hue = dlg.data.lowtemp,
                 saturation = 1,
                 lightness = 0.5
-            }
+            },
+            onchange = function()
+                dlg:modify{
+                    id = "lowtemp",
+                    value = dlg.data.lowtempcol.hue
+                }
+            end
         }:color{
             id = "hightempcol",
             color = Color {
                 hue = dlg.data.hightemp,
                 saturation = 1,
                 lightness = 0.5
-            }
+            },
+            onchange = function()
+                dlg:modify{
+                    id = "hightemp",
+                    value = dlg.data.hightempcol.hue
+                }
+            end
         }
     }:slider{
         -- slider to set shade saturation gradient
@@ -359,28 +379,22 @@ local function createDialog()
     dlg:show{wait = false}
 end
 
-local function onFgChange()
-    if (eyeDropper == true and autoPick == true) then
-        FGcache = app.fgColor
-        calculateColors(app.fgColor)
-        lastColor = FGcache
-        updateDialogData()
-    elseif (eyeDropper == false) then
-        -- print("inside shades")
+local function onFBGChange(fg)
+    return function()
+        if (eyeDropper == true and autoPick == true) then
+            if fg then
+                col = app.fgColor
+                FGcache = col
+            else
+                col = app.bgColor
+                BGcache = col
+            end
+            calculateColors(col)
+            lastColor = col
+            updateDialogData()
+        end
+        eyeDropper = true
     end
-    eyeDropper = true
-end
-
-local function onBgChange()
-    if (eyeDropper == true and autoPick == true) then
-        BGcache = app.bgColor
-        calculateColors(app.bgColor)
-        lastColor = BGcache
-        updateDialogData()
-    elseif (eyeDropper == false) then
-        -- print("inside shades")
-    end
-    eyeDropper = true
 end
 
 -- run the script ------------------------------------------------------------------
@@ -391,6 +405,6 @@ do
     createDialog()
     calculateColors(app.fgColor)
     updateDialogData()
-    fgListenerCode = app.events:on('fgcolorchange', onFgChange)
-    bgListenerCode = app.events:on('bgcolorchange', onBgChange)
+    fgListenerCode = app.events:on('fgcolorchange', onFBGChange(true))
+    bgListenerCode = app.events:on('bgcolorchange', onFBGChange(false))
 end
