@@ -1,12 +1,13 @@
 # Aseprite Color Shading v4.0
-This is an Aseprite Script that opens a dynamic palette picker window with relevant color shading options
-v1.0-2.0 by Dominick John and David Capello, https://github.com/dominickjohn/aseprite/tree/master
-v3.0 by yashar98, https://github.com/yashar98/aseprite/tree/main
-v3.1 by Daeyangae, https://github.com/Daeyangae/aseprite
-v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading/tree/main
+This is an Aseprite Script that opens a dynamic palette picker window with relevant color shading options.
+
+Based on v1.0-2.0 by Dominick John and David Capello, https://github.com/dominickjohn/aseprite/tree/master,  
+v3.0 by yashar98, https://github.com/yashar98/aseprite/tree/main,  
+v3.1 by Daeyangae, https://github.com/Daeyangae/aseprite,  
+v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading.
 
 ## Instructions:
-   Place this file into the Aseprite scripts folder (File -> Scripts -> Open Scripts Folder)
+   Place this file into the Aseprite scripts folder (File -> Scripts -> Open Scripts Folder).  
    Run the "Color Shading" script (File -> Scripts -> Color Shading v4.0) to open the palette window.
 ## Usage:
 - Base: Clicking on either base color will switch the shading palette to that saved color base.
