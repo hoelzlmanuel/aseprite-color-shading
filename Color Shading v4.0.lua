@@ -3,7 +3,7 @@
 -- v1.0-2.0 by Dominick John and David Capello, https://github.com/dominickjohn/aseprite/tree/master
 -- v3.0 by yashar98, https://github.com/yashar98/aseprite/tree/main
 -- v3.1 by Daeyangae, https://github.com/Daeyangae/aseprite
--- v4.0 by Manuel Hoelzl, TODO
+-- v4.0 by Manuel Hoelzl, https://github.com/hoelzlmanuel/aseprite-color-shading
 
 -- Instructions:
 --    Place this file into the Aseprite scripts folder (File -> Scripts -> Open Scripts Folder)
